@@ -4,7 +4,7 @@ const express = require("express");
 const router = express.Router();
 
 router.get(`/`, async (req, res) => {
-    const products = await Product.find();
+    const products = await Product.find().populate('category');
 
     if (!products) {
         res.status(500).json({ success: false });
