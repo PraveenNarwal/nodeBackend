@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 
 const productSchema = mongoose.Schema({
+  
     name: {
         type: String,
         required: true,
@@ -56,5 +57,11 @@ const productSchema = mongoose.Schema({
         default: Date.now
     },
 })
+
+productSchema.virtual('id').get(function () {
+    return this._id.toHexString();
+});
+
+productSchema.set("toJSON", {   virtuals: true,   versionKey: false,   transform: function(doc, ret) {     delete ret._id;   } });
 
 exports.Product = mongoose.model('Product', productSchema);
